@@ -65,5 +65,26 @@ public class ExpenseDAO{
         }
     }
 
+    public static void monthExpense(String month) {
+        String sqlQuery = "SELECT * FROM expenses WHERE dateIncurred LIKE ?";
 
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/financeDB", "root", "");
+             PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
+             ps.setString(1, month + "%");//add the month + remaining date
+             ResultSet rs =  ps.executeQuery();
+
+            System.out.println("Month expenses:");
+             while (rs.next()) {
+                System.out.println(rs.getInt("expenseID")+", "+
+                        rs.getString("title")+", "+
+                        rs.getString("category")+", €"+
+                        rs.getDouble("amount")+", "+
+                        rs.getDate("dateIncurred"));
+
+             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
+

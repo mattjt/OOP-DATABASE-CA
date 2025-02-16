@@ -63,7 +63,10 @@ public class AppMain {
                     IncomeDAO.deleteIncome(incId);
                     break;
                 case 7://month summary
-
+                    System.out.println("Enter month (YYYY-MM):");
+                    String month = scan.nextLine();
+                    ExpenseDAO.monthExpense(month);
+                    IncomeDAO.monthIncome(month);
                     break;
                 case 8://exit
                     System.out.println("Exiting Program");

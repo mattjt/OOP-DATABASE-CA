@@ -61,4 +61,25 @@ public class IncomeDAO {
             e.printStackTrace();
         }
     }
+
+    public static void monthIncome(String month) {
+        String sqlQuery = "SELECT * FROM income WHERE dateEarned LIKE ?";
+
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/financeDB", "root", "");
+             PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
+            ps.setString(1, month + "%");//add the month + remaining date
+            ResultSet rs =  ps.executeQuery();
+            System.out.println("Month income:");
+
+            while (rs.next()) {
+                System.out.println(rs.getInt("incomeID")+", "+
+                        rs.getString("title")+", €"+
+                        rs.getDouble("amount")+", "+
+                        rs.getString("dateEarned"));
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
