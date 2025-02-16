@@ -13,7 +13,7 @@ public class ExpenseDTO {
         this.amount = amount;
         this.dateIncurred = dateIncurred;
     }
-
+    //getters
     public int getExpenseID() {
         return expenseID;
     }
@@ -29,6 +29,7 @@ public class ExpenseDTO {
     public String getDateIncurred() {
         return dateIncurred;
     }
+    //setters
     public void setExpenseID(int expenseID) {
         this.expenseID = expenseID;
     }

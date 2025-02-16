@@ -14,6 +14,7 @@ public class ExpenseDAO{
         String sqlQuery = "SELECT * FROM expenses";
         double totalExpenses = 0;
         try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/financeDB","root", "");
+
              Statement statement = connection.createStatement();
 
              ResultSet rs = statement.executeQuery(sqlQuery)) {
@@ -25,7 +26,7 @@ public class ExpenseDAO{
                         rs.getDate("dateIncurred"));
                 totalExpenses += rs.getDouble("amount");
              }
-            System.out.println("Total expenses: "+totalExpenses);
+            System.out.println("Total expenses: €"+totalExpenses);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -33,6 +34,7 @@ public class ExpenseDAO{
 
     public  static void addExpense(ExpenseDTO expense) {
         String sqlQuery = "INSERT INTO expenses (title, category, amount, dateIncurred) VALUES (?, ?, ?, ?)";
+
         try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/financeDB", "root", "");
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
@@ -50,6 +52,7 @@ public class ExpenseDAO{
 
     public static void deleteExpense(int expenseID) {//id passed in from user input
         String sqlQuery = "DELETE FROM expenses WHERE expenseID = ?";
+
         try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/financeDB", "root", "");
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 

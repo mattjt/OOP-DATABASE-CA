@@ -1,7 +1,9 @@
 package expenseDatabase.BusinessObjects;
 
 import expenseDatabase.DAOs.ExpenseDAO;
+import expenseDatabase.DAOs.IncomeDAO;
 import expenseDatabase.DTOs.ExpenseDTO;
+import expenseDatabase.DTOs.IncomeDTO;
 import java.util.Scanner;
 
 public class AppMain {
@@ -42,21 +44,30 @@ public class AppMain {
                     int eId = scan.nextInt();
                     ExpenseDAO.deleteExpense(eId);
                     break;
-                case 4:
-                    //list all income
+                case 4://list all income and show total
+                    IncomeDAO.listIncome();
                     break;
-                case 5:
-                    //add new income
+                case 5://add new income
+                    System.out.println("Enter title:");
+                    String incTitle = scan.nextLine();
+                    System.out.println("Enter amount:");
+                    double incAmount = scan.nextDouble();
+                    scan.nextLine();
+                    System.out.println("Enter date (YYYY-MM-DD):");//change
+                    String incDate = scan.nextLine();
+                    IncomeDAO.addIncome(new IncomeDTO(incTitle, incAmount, incDate));
                     break;
-                case 6:
-                    //delete income
+                case 6://delete income
+                    System.out.println("Enter income ID to delete:");
+                    int incId = scan.nextInt();
+                    IncomeDAO.deleteIncome(incId);
                     break;
-                case 7:
-                    //month summary
+                case 7://month summary
+
                     break;
-                case 8:
+                case 8://exit
                     System.out.println("Exiting Program");
-                    return;
+                    cont = false;
                 default:
                     System.out.println("Invalid input, try again please.");
 
