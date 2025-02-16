@@ -43,6 +43,11 @@ public class ExpenseDTO {
         this.amount = amount;
     }
     public void setDateIncurred(String dateIncurred) {
+
         this.dateIncurred = dateIncurred;
+    }
+    @Override
+    public String toString() {
+        return expenseID+", "+title+ ", "+ category+ ", €"+ amount+ ", "+ dateIncurred;
     }
 }

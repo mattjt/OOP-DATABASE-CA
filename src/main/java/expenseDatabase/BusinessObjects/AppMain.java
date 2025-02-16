@@ -11,6 +11,7 @@ public class AppMain {
         Scanner scan = new Scanner(System.in);
         boolean cont = true;
         while (cont) {//menu
+            System.out.println("____________________________________________________________________________________________________");
             System.out.println("(1) List all expenses");
             System.out.println("(2) Add new expense");
             System.out.println("(3) Delete expense");
@@ -19,6 +20,7 @@ public class AppMain {
             System.out.println("(6) Delete income");
             System.out.println("(7) Summary for a month");
             System.out.println("(8) Exit");
+            System.out.println("____________________________________________________________________________________________________");
 
             int choice = scan.nextInt();
             scan.nextLine();
@@ -35,7 +37,7 @@ public class AppMain {
                     System.out.println("Enter amount:");
                     double amount = scan.nextDouble();
                     scan.nextLine();
-                    System.out.println("Enter date (YYYY-MM-DD):");//maybe change date format
+                    System.out.println("Enter date (YYYY-MM-DD):");
                     String date = scan.nextLine();
                     ExpenseDAO.addExpense(new ExpenseDTO(title, category, amount, date));
                     break;
@@ -53,7 +55,7 @@ public class AppMain {
                     System.out.println("Enter amount:");
                     double incAmount = scan.nextDouble();
                     scan.nextLine();
-                    System.out.println("Enter date (YYYY-MM-DD):");//change
+                    System.out.println("Enter date (YYYY-MM-DD):");
                     String incDate = scan.nextLine();
                     IncomeDAO.addIncome(new IncomeDTO(incTitle, incAmount, incDate));
                     break;
@@ -67,6 +69,10 @@ public class AppMain {
                     String month = scan.nextLine();
                     ExpenseDAO.monthExpense(month);
                     IncomeDAO.monthIncome(month);
+                    System.out.println("Total expenses: €"+ExpenseDAO.monthTotalExpense(month));
+                    System.out.println("Total income: €"+IncomeDAO.monthTotalIncome(month));
+                    double balance = IncomeDAO.monthTotalIncome(month)-ExpenseDAO.monthTotalExpense(month);
+                    System.out.println("Month Balance: €"+balance);
                     break;
                 case 8://exit
                     System.out.println("Exiting Program");

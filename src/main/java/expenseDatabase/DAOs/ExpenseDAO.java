@@ -13,7 +13,7 @@ public class ExpenseDAO{
     public static void listExpenses() {
         String sqlQuery = "SELECT * FROM expenses";
         double totalExpenses = 0;
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/financeDB","root", "");
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/OOPCADB","root", "");
 
              Statement statement = connection.createStatement();
 
@@ -35,7 +35,7 @@ public class ExpenseDAO{
     public  static void addExpense(ExpenseDTO expense) {
         String sqlQuery = "INSERT INTO expenses (title, category, amount, dateIncurred) VALUES (?, ?, ?, ?)";
 
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/financeDB", "root", "");
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/OOPCADB", "root", "");
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
              ps.setString(1,expense.getTitle());
@@ -53,7 +53,7 @@ public class ExpenseDAO{
     public static void deleteExpense(int expenseID) {//id passed in from user input
         String sqlQuery = "DELETE FROM expenses WHERE expenseID = ?";
 
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/financeDB", "root", "");
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/OOPCADB", "root", "");
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
 
              ps.setInt(1, expenseID);
@@ -68,7 +68,7 @@ public class ExpenseDAO{
     public static void monthExpense(String month) {
         String sqlQuery = "SELECT * FROM expenses WHERE dateIncurred LIKE ?";
 
-        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/financeDB", "root", "");
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/OOPCADB", "root", "");
              PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
              ps.setString(1, month + "%");//add the month + remaining date
              ResultSet rs =  ps.executeQuery();
@@ -85,6 +85,23 @@ public class ExpenseDAO{
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static double monthTotalExpense(String month) {
+        String sqlQuery = "SELECT amount FROM expenses WHERE dateIncurred LIKE ?";
+        double total =0;
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/OOPCADB", "root", "");
+             PreparedStatement ps = connection.prepareStatement(sqlQuery)) {
+            ps.setString(1, month + "%");//add the month + remaining date
+            ResultSet rs =  ps.executeQuery();
+
+            while (rs.next()) {
+                total += rs.getDouble("amount");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return total;
     }
 }
 
